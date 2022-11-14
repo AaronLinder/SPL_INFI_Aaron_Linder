@@ -1,0 +1,35 @@
+import RPi.GPIO as GPIO
+import time
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(3,GPIO.OUT)
+GPIO.setup(5,GPIO.OUT)
+GPIO.setup(7,GPIO.OUT)
+
+GPIO.output(3,True)
+GPIO.output(5,False)
+
+State = True
+while True:
+    eingabe = int(input())
+    if eingabe == 1 and State == True:
+        GPIO.output(7,True)
+        time.sleep(3.5)
+        GPIO.output(3,False)
+        GPIO.output(7,False)
+        GPIO.output(5,True)
+        State = False
+    elif eingabe == 1 and State == False:
+        i = 0
+        while i < 4:
+            GPIO.output(5,False)
+            time.sleep(0.5)
+            GPIO.output(5,True)
+            time.sleep(0.5)
+            i = i +1
+        GPIO.output(5,False)
+        GPIO.output(7,True)
+        time.sleep(3.5)
+        GPIO.output(7,False)
+        GPIO.output(3,True)
+        State = True
